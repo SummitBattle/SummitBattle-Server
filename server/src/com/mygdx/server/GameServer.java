@@ -14,8 +14,11 @@ import com.mygdx.common.PlayerInput;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.net.*;
 
 
 
@@ -23,12 +26,36 @@ public class GameServer {
     private Server server;
     private ConnectedClientsManager clientsManager;
     int ClientID;
+    InetAddress localhost;
+
+    String publicIP;
 
 
 
 
 
     public GameServer() throws IOException {
+        try
+        {
+            localhost = InetAddress.getLocalHost();
+            System.out.println("Local IP Address = " +localhost.getHostAddress());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Exception: " +e);
+        }
+        try
+        {
+            URL ipfinder = new URL("https://checkip.amazonaws.com");
+            BufferedReader br = new BufferedReader(new InputStreamReader(ipfinder.openStream()));
+            publicIP = br.readLine();
+            System.out.println("Public IP Address = " +publicIP);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Exception: " +e);
+        }
+
         JFrame frame = new JFrame("Chat Server");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
@@ -36,8 +63,8 @@ public class GameServer {
                 server.stop();
             }
         });
-        frame.getContentPane().add(new JLabel("Close to stop the server."));
-        frame.setSize(320, 200);
+        frame.getContentPane().add(new JLabel("        Your private IP is: " + localhost.getHostAddress() + "               Public IP is: " + publicIP));
+        frame.setSize(500, 200);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         server = new Server();
