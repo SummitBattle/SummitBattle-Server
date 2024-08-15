@@ -37,7 +37,7 @@ public class Network {
     }
 
     static public class PlayerNumberSend {
-        public String Playernumber;
+        public int Playernumber;
     }
 
 

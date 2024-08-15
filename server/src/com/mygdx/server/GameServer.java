@@ -76,6 +76,7 @@ public class GameServer {
             @Override
             public void connected(Connection connection) {
 
+
             }
 
             @Override
@@ -102,17 +103,19 @@ public class GameServer {
 
                     clientsManager.addConnectedClient(ipAddress, clientName, ClientID);
 
+
                     matchmakingManager.matchmaking(clientsManager.getConnectedClients(),clientsManager,server);
 
                 }
                 if (object instanceof PlayerNumberReq) {
+                    System.out.println(clientsManager.getConnectedClients());
                     PlayerNumberSend playerNumberSend = new PlayerNumberSend();
-                    if ( connection.getID() % 2 == 1) {
-                        playerNumberSend.Playernumber = "Player 1";
-                    } else if (connection.getID() % 2 == 0) {
-                        playerNumberSend.Playernumber = "Player 2";
-                    }
-                    server.sendToUDP(connection.getID(), playerNumberSend);
+                    int PLAYERID = connection.getID();
+                    System.out.println("CONNECTION ID REQ IS: " + PLAYERID);
+
+                        playerNumberSend.Playernumber = PLAYERID;
+                    System.out.println("sending:" + PLAYERID + " " + playerNumberSend.Playernumber + " to " + PLAYERID);
+                    server.sendToUDP(PLAYERID, playerNumberSend);
                 }
 
                 if (object instanceof PlayerInput) {

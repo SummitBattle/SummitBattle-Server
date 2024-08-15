@@ -13,7 +13,11 @@ class ConnectedClientsManager {
     }
 
     public void addConnectedClient(String ipAddress, String name, int id) {
+        System.out.println(name );
+        System.out.println(ipAddress);
+        System.out.println(id);
         ConnectedClients.add(new ConnectedClient(ipAddress, name, id));
+
     }
 
     public void removeConnectedClientById(int id) {
