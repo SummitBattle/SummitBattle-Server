@@ -128,12 +128,10 @@ public class GameServer {
         });
 
 
-        int port = 5000;
         int UDPPort = 4999;
-        server.bind(port,UDPPort);
+        server.bind(UDPPort);
         server.start();
 
-        System.out.println("Server started and listening on port " + port);
     }
 
     public static void main(String[] args) {
