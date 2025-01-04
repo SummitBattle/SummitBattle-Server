@@ -56,7 +56,7 @@ public class GameServer {
             System.out.println("Exception: " +e);
         }
 
-        JFrame frame = new JFrame("Chat Server");
+        JFrame frame = new JFrame("Summit Server");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosed (WindowEvent evt) {
@@ -107,12 +107,8 @@ public class GameServer {
                 }
                 if (object instanceof PlayerNumberReq) {
                     PlayerNumberSend playerNumberSend = new PlayerNumberSend();
-                    if ( connection.getID() % 2 == 1) {
-                        playerNumberSend.Playernumber = "Player 1";
-                    } else if (connection.getID() % 2 == 0) {
-                        playerNumberSend.Playernumber = "Player 2";
-                    }
-                    server.sendToUDP(connection.getID(), playerNumberSend);
+                    playerNumberSend.Playernumber = connection.getID();
+                    server.sendToTCP(connection.getID(), playerNumberSend);
                 }
 
                 if (object instanceof PlayerInput) {
@@ -121,15 +117,14 @@ public class GameServer {
                     int clientId = connection.getID();
                     Integer pairedClientId = matchmakingManager.getPairedClientId(clientId);
                     if (pairedClientId != null) {
-                        server.sendToUDP(pairedClientId, input);
+                        server.sendToTCP(pairedClientId, input);
 
                     }
                 }}
         });
 
 
-        int UDPPort = 4999;
-        server.bind(UDPPort);
+        server.bind(5000);
         server.start();
 
     }

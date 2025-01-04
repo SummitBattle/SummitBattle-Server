@@ -33,8 +33,8 @@ public class MatchmakingManager {
         notifyMessage.connectedClient1 = player1;
         notifyMessage.connectedClient2 = player2;
         notifyMessage.isReady = true;
-        server.sendToUDP(player1.getID(), notifyMessage);
-        server.sendToUDP(player2.getID(), notifyMessage);
+        server.sendToTCP(player1.getID(), notifyMessage);
+        server.sendToTCP(player2.getID(), notifyMessage);
     }
 
     public Integer getPairedClientId(int clientId) {
